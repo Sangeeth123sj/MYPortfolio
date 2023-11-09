@@ -15,7 +15,7 @@
 
     <!-- MAIN STYLE -->
     <link rel="stylesheet" href="css/tooplate-style.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--
 
 Tooplate 2115 Marvel
@@ -87,7 +87,7 @@ https://www.tooplate.com/view/2115-marvel
                         <p>Building a successful product is a challenge. I am highly energetic in user experience design, interfaces and web development.</p>
                         
                         <div class="custom-btn-group mt-4">
-                          <a href="#" class="btn mr-lg-2 custom-btn"><i class='uil uil-file-alt'></i> Download Resume</a>
+                          <!-- <a href="#" class="btn mr-lg-2 custom-btn"><i class='uil uil-file-alt'></i> Download Resume</a> -->
                           <a href="#contact" class="btn custom-btn custom-btn-bg custom-btn-link">Get a free quote</a>
                         </div>
                     </div>
@@ -299,22 +299,22 @@ https://www.tooplate.com/view/2115-marvel
             <div class="contact-form">
               <h2 class="mb-4">Interested to work together? Let's talk</h2>
 
-              <form action="" method="get">
+              <form>
                 <div class="row">
                   <div class="col-lg-6 col-12">
-                    <input type="text" class="form-control" name="name" placeholder="Your Name" id="name">
+                    <input type="text" required class="form-control" name="name" placeholder="Your Name" id="name">
                   </div>
 
                   <div class="col-lg-6 col-12">
-                    <input type="email" class="form-control" name="email" placeholder="Email" id="email">
+                    <input type="email" required class="form-control" name="email" placeholder="Email" id="email">
                   </div>
 
                   <div class="col-12">
-                    <textarea name="message" rows="6" class="form-control" id="message" placeholder="Message"></textarea>
+                    <textarea name="message" type="text" required rows="6" class="form-control" id="message" placeholder="Message"></textarea>
                   </div>
 
                   <div class="ml-lg-auto col-lg-5 col-12">
-                    <input type="submit" class="form-control submit-btn" value="Send Button">
+                    <input type="button" id="send-btn" class="form-control submit-btn" value="Send Button">
                   </div>
                 </div>
               </form>
@@ -324,6 +324,47 @@ https://www.tooplate.com/view/2115-marvel
         </div>
       </div>
     </section>
+
+    <script>
+      const sendBtn = document.getElementById('send-btn');
+      sendBtn.addEventListener('click', () => {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+    
+        if (name === '' || email === '' || message === '') {
+          Swal.fire({
+            title: "Oops",
+            text: "Please fill all fields",
+            icon: "error"
+          });
+        } else {
+          const formData = new FormData()
+          formData.append("name",name)
+          formData.append("email",email)
+          formData.append("message",message)
+
+          fetch("https://getform.io/f/a7310bae-0dfa-4efa-b3dd-1309aa39a40b", {
+              method: "POST",
+              body: formData,
+              headers: {
+                  "Accept": "application/json",
+              },
+          })
+          .then(response => console.log(response))
+          .catch(error => console.log(error))
+
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Your Query has been sent",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          //document.querySelector('form').submit();
+        }
+      });
+    </script>
 
     <!-- FOOTER -->
      <footer class="footer py-5">
