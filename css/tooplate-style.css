@@ -31,7 +31,14 @@ ul {
   padding: 0;
 }
 ul li {
-  list-style: none;
+  /* list-style: none; */
+}
+
+
+
+.dark-border{
+  border-color:#5b5b5b !important;
+  border-radius: 5px !important;
 }
 
 a {
